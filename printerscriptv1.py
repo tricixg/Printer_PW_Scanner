@@ -99,6 +99,10 @@ def check_default_password_from_file(file_path):
     results = []
     for ip_address in ip_addresses:
         ip_address = ip_address.strip()  # Remove leading/trailing whitespace and newlines
+
+        if not ip_address:  # Skip empty lines
+            continue
+
         if ip_address.startswith('http://'):
             ip_address = ip_address[len('http://'):]
         elif ip_address.startswith('https://'):
