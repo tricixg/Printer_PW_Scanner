@@ -7,7 +7,6 @@ from tkinter import filedialog
 
 
 verify = False
-requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS='ALL'
 # Disable all warnings
 warnings.filterwarnings("ignore")
 
@@ -18,20 +17,12 @@ def check_javascript(html):
 def get_device_name(html):
     soup = BeautifulSoup(html, 'html.parser')
 
-    # device_name_element = soup.find('p', {'class': 'device-name', 'id': 'HomeDeviceName'})
-    # device_name = device_name_element.text.strip() if device_name_element else ''
-
-    # if not device_name:
-    #     user_id_element = soup.find('div', {'class': 'userId'})
-    #     device_name = user_id_element.text.strip() if user_id_element else ''
-
-    # if not device_name:
-    #     product_element = soup.find('strong', {'class': 'product'})
-    #     device_name = product_element.text.strip() if product_element else ''
-
-    # if not device_name:
     title_element = soup.find('title')
     device_name = title_element.text.strip() if title_element else 'Device name not found'
+
+    if 'Device Status' in device_name:
+        device_name_element = soup.find('p', {'class': 'device-name', 'id': 'HomeDeviceName'})
+        device_name = device_name_element.text.strip() if device_name_element else ''
 
     return device_name
 
